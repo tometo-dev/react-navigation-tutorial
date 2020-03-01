@@ -4,20 +4,12 @@ import { AppParamList } from "./AppParamList"
 import { Center } from "./Center"
 import { Text, Button } from "react-native"
 import { AuthContext } from "./AuthProvider"
+import { AntDesign, EvilIcons } from "@expo/vector-icons"
+import { HomeStack } from "./HomeStack"
 
 interface AppTabsProps {}
 
 const Tabs = createBottomTabNavigator<AppParamList>()
-
-const Home = () => {
-  const { logout } = useContext(AuthContext)
-  return (
-    <Center>
-      <Text>Home</Text>
-      <Button title="logout" onPress={() => logout()} />
-    </Center>
-  )
-}
 
 const Search = () => {
   return (
@@ -29,8 +21,22 @@ const Search = () => {
 
 export const AppTabs: React.FC<AppTabsProps> = ({}) => {
   return (
-    <Tabs.Navigator>
-      <Tabs.Screen name="Home" component={Home} />
+    <Tabs.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          if (route.name === "Home") {
+            return <AntDesign name={"home"} size={size} color={color} />
+          } else if (route.name === "Search") {
+            return <EvilIcons name={"search"} size={size} color={color} />
+          }
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: "tomato",
+        inactiveTintColor: "gray",
+      }}
+    >
+      <Tabs.Screen name="Home" component={HomeStack} />
       <Tabs.Screen name="Search" component={Search} />
     </Tabs.Navigator>
   )
