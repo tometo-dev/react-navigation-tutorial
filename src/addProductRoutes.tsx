@@ -1,7 +1,9 @@
 import { TouchableOpacity, Text, Button } from "react-native"
-import { HomeStackNavProps } from "./HomeParamList"
+import { HomeStackNavProps, HomeParamList } from "./HomeParamList"
 import { Center } from "./Center"
 import React, { useState, useRef, useEffect } from "react"
+import { TypedNavigator, StackNavigationState } from "@react-navigation/native"
+import { SearchParamList, SearchStackNavProps } from "./SearchParamList"
 
 const Product = ({ route, navigation }: HomeStackNavProps<"Product">) => {
   return (
@@ -47,7 +49,15 @@ const EditProduct = ({
   )
 }
 
-export const addProductRoutes = (Stack: any) => {
+export const addProductRoutes = (
+  Stack: TypedNavigator<
+    HomeParamList | SearchParamList,
+    StackNavigationState,
+    any,
+    any,
+    any
+  >,
+) => {
   return (
     <>
       <Stack.Screen
